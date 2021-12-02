@@ -1,1 +1,1 @@
-# keep-it-synth-le-stupid
+# Keep It Synth-le Stupid
