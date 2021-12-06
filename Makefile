@@ -5,7 +5,7 @@ VVP=vvp
 VVP_POST=-vcd
 VIVADO=vivado -mode batch -source
 
-WAVE_SRCS = wave_generators/saw_wave.sv
+WAVE_SRCS = wave_generators/saw_wave.sv wave_generators/square_wave.sv
 
 # Look up .PHONY rules for Makefiles
 .PHONY: clean submission remove_solutions
@@ -18,6 +18,12 @@ test_saw_wave: tests/test_saw_wave.sv ${WAVE_SRCS}
 
 waves_saw: test_saw_wave ${WAVE_SRCS}
 	gtkwave results/test_saw.vcd
+
+test_square_wave: tests/test_square_wave.sv ${WAVE_SRCS}
+	${IVERILOG} $^ -o test_saw_wave.bin && ${VVP} test_saw_wave.bin ${VVP_POST}
+
+waves_square: test_square_wave ${WAVE_SRCS}
+	gtkwave results/test_square.vcd
 
 main.bit: main.sv $(MAIN_SRCS) build.tcl
 	@echo "########################################"
