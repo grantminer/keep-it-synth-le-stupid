@@ -44,7 +44,7 @@ clean:
 	rm -f *.bin *.vcd *.fst vivado*.log *.jou vivado*.str *.log *.checkpoint *.bit *.html *.xml
 	rm -rf .Xil
 	rm -rf __pycache__
-	rm asm/*.memh
+	rm -rf results/*.vcd
 
 # Call this to generate your submission zip file.
 submission:

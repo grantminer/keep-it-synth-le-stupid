@@ -7,7 +7,7 @@ module saw_wave(clk, rst, ena, out);
     input wire clk, rst, ena;
 
     output logic [$clog2(N-1):0] out;
-    wire [$clog2(N-1):0] q;
+    logic [$clog2(N-1):0] q;
 
     always_ff @(posedge clk) begin
         if (rst) q <= 0;
