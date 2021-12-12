@@ -31,6 +31,9 @@ waves_square: test_square_wave ${WAVE_SRCS}
 waves_triangle: test_triangle_wave ${WAVE_SRCS}
 	gtkwave results/test_triangle.vcd
 
+test_main: tests/test_main.sv main.sv debouncer.sv edge_detector.sv ${WAVE_SRCS}
+	${IVERILOG} $^ -o test_main.bin && ${VVP} test_main.bin ${VVP_POST}
+
 main.bit: main.sv $(MAIN_SRCS) build.tcl
 	@echo "########################################"
 	@echo "#### Building FPGA bitstream        ####"
