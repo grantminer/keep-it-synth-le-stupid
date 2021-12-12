@@ -15,9 +15,9 @@ output logic [11:0] signal;
 output logic [2:0] rgb;
 logic rst; always_comb rst = buttons[0];
 
-wire SQUARE_OUT;
-wire TRIANGLE_OUT;
-wire SAW_OUT;
+wire [3:0] SQUARE_OUT;
+wire [3:0] TRIANGLE_OUT;
+wire [3:0] SAW_OUT;
 
 wire debounced;
 debouncer #(.BOUNCE_TICKS(250)) DEBOUNCE(
@@ -27,21 +27,23 @@ debouncer #(.BOUNCE_TICKS(250)) DEBOUNCE(
 );
 
 wire positive_edge;
-edge_detector_moore EDGE_DETECTOR(
+wire negative_edge;
+edge_detector EDGE_DETECTOR(
   .clk(clk), .rst(rst),
   .in(debounced), 
-  .positive_edge(positive_edge)
+  .positive_edge(positive_edge),
+  .negative_edge(negative_edge)
 );
 
-square_wave SQUARE_WAVE(
+square_wave #(.N(8)) SQUARE_WAVE(
     .clk(clk), .rst(rst), .ena(ena), .out(SQUARE_OUT)
 );
 
-triangle_wave TRIANGLE_WAVE(
+triangle_wave #(.N(4)) TRIANGLE_WAVE(
     .clk(clk), .rst(rst), .ena(ena), .out(TRIANGLE_OUT)
 );
 
-saw_wave SAW_WAVE(
+saw_wave #(.N(8)) SAW_WAVE(
     .clk(clk), .rst(rst), .ena(ena), .out(SAW_OUT)
 );
 
@@ -71,7 +73,7 @@ always_ff @(posedge clk) begin : wave_fsm
                 S_SAW : begin
                     wave_state <= S_IDLE;
                 end
-                default : S_ERROR;
+                default : wave_state <= S_ERROR;
             endcase
         end
     end
