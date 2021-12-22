@@ -9,6 +9,12 @@ There are four wave patterns controlled by the buttons on the FPGA: idle, square
 ![Waveforms](./images/Waveforms.png)
  
 In future iterations, we would like to add the option for waveform frequency and amplitude control through more buttons initially and later through a touchscreen controller. We would also like to add a sine wave generator. Eventually, we would like to be able to play multiple notes at once and either have ROM store a song or take MIDI inputs.
+
+## Audio Synthesizer Background
+
+The most basic building block of a synth is the Voltage Controlled Oscillator (VCO) which controls three attributes to modify the output repeating waveform: frequency, amplitude, and waveshape. Frequency determines the speed that a waveform completes one cycle to create pitch, which is measured in Hertz (Hz). Amplitude changes the volume in  decibels (dB) of the sound. Finally, there are four main waveshapes: sine, square, triangle, and sawtooth. As mentioned above, for the minimal viable product we chose to focus on building a VCO that generates square, triangle, and sawtooth waves that have a set frequency and amplitude. 
+
+In addition to VCOs, synths usually have Low Frequency Oscillators (LFOs). LFOs modulate other parts of the synth using the aforementioned waveshapes without changing the tone. 
  
 ## System
  
@@ -44,8 +50,11 @@ Our final implementation used the following parts:
  
 ![Breadboarded Final Implementation](./images/implementation.jpg)
 
+Note: Breadboard implementation of the circuit got messed up before the photo was taken, and it went unnoticed until we were out of access from the breadboard. The red wire of the speaker should be connnected to the output of the op-amp in column fourteen (top right-most pin of the op-amp).
+
 ![Amplified Circuit Diagram](./images/AmplifiedCircuit.jpeg)
-The image above displays the circuit implementation with the DAC and the Op Amp. We used the LTC7545AKN converter and the LMC6484 amplifier. By wiring the output of the DAC through the Op Amp we were able to amplify the signal so it was just barely audible through the speaker. Further exploration would center around adjusting the amplification scheme to make the signal even louder.
+
+The image above displays the circuit implementation with the DAC and the Op Amp. We used the LTC7545AKN converter and the LMC6484 amplifier. By wiring the output of the DAC through the Op Amp, we were able to amplify the signal, so it was just barely audible through the speaker. Further exploration would center around adjusting the amplification scheme to make the signal even louder.
 
 The signal pins were driven from the FPGA using SystemVerilog code that represents the circuitry depicted in this file. The 7 most significant bits of the signal generator's output are connected to FPGA pins one through seven, with pin 1 being signal\[5] and pin 7 being signal\[11]. Signal\[0:4] is connected to pin 44 through pin 48.
  
