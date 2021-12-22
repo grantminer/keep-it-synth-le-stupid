@@ -14,7 +14,7 @@ In future iterations, we would like to add the option for waveform frequency and
  
 Our system is composed of a finite state machine that cycles through four states: idle, square, triangle, and sawtooth. 
  
-![State Diagram](./images/state_diagram.jpg)
+![State Diagram](./images/state_diagram.jpeg)
  
 The system rotates through the states when button one is pressed and resets to idle through the press of button zero as shown above. In each of the three waveform states, we output the generated waveform signal and light up an LED corresponding with the state. 
  
@@ -43,6 +43,11 @@ Our final implementation used the following parts:
 4. [Speaker](https://www.mouser.com/ProductDetail/CUI-Devices/CLS0261MAE-L152?qs=WyjlAZoYn502brWO74DIfQ%3D%3D) 
  
 ![Breadboarded Final Implementation](./images/implementation.jpg)
+
+![Amplified Circuit Diagram](./images/AmplifiedCircuit.jpeg)
+The image above displays the circuit implementation with the DAC and the Op Amp. We used the LTC7545AKN converter and the LMC6484 amplifier. By wiring the output of the DAC through the Op Amp we were able to amplify the signal so it was just barely audible through the speaker. Further exploration would center around adjusting the amplification scheme to make the signal even louder.
+
+The signal pins were driven from the FPGA using SystemVerilog code that represents the circuitry depicted in this file. The 7 most significant bits of the signal generator's output are connected to FPGA pins one through seven, with pin 1 being signal\[5] and pin 7 being signal\[11]. Signal\[0:4] is connected to pin 44 through pin 48.
  
  
 
